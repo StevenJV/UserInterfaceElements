@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="styles/kendo.default.min.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var cars = [
+                { year: 2012, make: "Farrari", model: "California" },
+                { year: 2011, make: "BMW", model: "325is" },
+                { year: 2010, make: "Mini", model: "Cooper S" },
+                { year: 2012, make: "Chevy", model: "Cavalier" },
+                { year: 2011, make: "BMW", model: "R100RS" },
+                { year: 2010, make: "Ford", model: "Bronco" },
+                { year: 2012, make: "Dodge", model: "Dart" },
+                { year: 2011, make: "Lexus", model: "RS" },
+                { year: 2010, make: "Volkswagen", model: "Thing" },
+                { year: 2012, make: "Volkswagen", model: "Super Beetle" },
+                { year: 2011, make: "Mini", model: "Clubman" },
+                { year: 2010, make: "Mini", model: "Countryman" },
+                { year: 2009, make: "Porche", model: "Boxster" }
+            ];
+            var modelList = new kendo.data.DataSource({
+                data: cars,
+                group: [field: "model"]
+                //pageSize: 10,  //if grid not pagable, and qty>pageSize, remaining items don't display. 
+                sort: { field: "model", dir: "asc" }  // default sort
+            });
+            carsDataSource.read();
+            kendo.init($("#modelPicker"));            
+    </script>
+</head>
+<body>
+    <div id="example" class="k-content">
+
+        <input id="modelPicker" data-role="combobox" data-source="modelList" >
+
+
+        <div class="demo-section">
+            <h2>View Order Details</h2>
+            <p>
+                <label for="categories">Categories:</label><input id="categories" style="width: 300px" />
+            </p>
+            <p>
+                <label for="products">Products:</label><input id="products" disabled="disabled" style="width: 300px" />
+            </p>
+            <p>
+                <label for="orders">Orders:</label><input id="orders" disabled="disabled" style="width: 300px" />
+            </p>
+
+            <button class="k-button" id="get">View Order</button>
+        </div>
+
+        <style scoped>
+            .demo-section {
+                width: 460px;
+                padding: 30px;
+            }
+
+                .demo-section h2 {
+                    text-transform: uppercase;
+                    font-size: 1.2em;
+                    margin-bottom: 30px;
+                }
+
+                .demo-section label {
+                    display: inline-block;
+                    width: 120px;
+                    padding-right: 5px;
+                    text-align: right;
+                }
+
+                .demo-section .k-button {
+                    margin: 20px 0 0 125px;
+                }
+
+            .k-readonly {
+                color: gray;
+            }
+        </style>
+
+        <script>
+            $(document).ready(function () {
+                var cars = [
+                        { year: 2012, make: "Farrari", model: "California" },
+                        { year: 2011, make: "BMW", model: "325is" },
+                        { year: 2010, make: "Mini", model: "Cooper S" },
+                        { year: 2012, make: "Chevy", model: "Cavalier" },
+                        { year: 2011, make: "BMW", model: "R100RS" },
+                        { year: 2010, make: "Ford", model: "Bronco" },
+                        { year: 2012, make: "Dodge", model: "Dart" },
+                        { year: 2011, make: "Lexus", model: "RS" },
+                        { year: 2010, make: "Volkswagen", model: "Thing" },
+                        { year: 2012, make: "Volkswagen", model: "Super Beetle" },
+                        { year: 2011, make: "Mini", model: "Clubman" },
+                        { year: 2010, make: "Mini", model: "Countryman" },
+                        { year: 2009, make: "Porche", model: "Boxster" }
+                ];
+                var carsDataSource = new kendo.data.DataSource({
+                    data: cars,
+                    //pageSize: 10,  //if grid not pagable, and qty>pageSize, remaining items don't display. 
+                    sort: { field: "year", dir: "asc" }  // default sort
+                });
+                carsDataSource.read();
+
+
+                var categories = $("#categories").kendoComboBox({
+                    filter: "contains",
+                    placeholder: "Select category...",
+                    dataTextField: "CategoryName",
+                    dataValueField: "CategoryID",
+                    dataSource: {
+                        type: "odata",
+                        serverFiltering: true,
+                        transport: {
+                            read: "http://demos.kendoui.com/service/Northwind.svc/Categories"
+                        }
+                    }
+                }).data("kendoComboBox");
+
+                var products = $("#products").kendoComboBox({
+                    autoBind: false,
+                    cascadeFrom: "categories",
+                    filter: "contains",
+                    placeholder: "Select product...",
+                    dataTextField: "ProductName",
+                    dataValueField: "ProductID",
+                    dataSource: {
+                        type: "odata",
+                        serverFiltering: true,
+                        transport: {
+                            read: "http://demos.kendoui.com/service/Northwind.svc/Products"
+                        }
+                    }
+                }).data("kendoComboBox");
+
+                var orders = $("#orders").kendoComboBox({
+                    autoBind: false,
+                    cascadeFrom: "products",
+                    filter: "contains",
+                    placeholder: "Select order...",
+                    dataTextField: "Order.ShipCity",
+                    dataValueField: "OrderID",
+                    dataSource: {
+                        type: "odata",
+                        serverFiltering: true,
+                        transport: {
+                            read: "http://demos.kendoui.com/service/Northwind.svc/Order_Details?$expand=Order"
+                        }
+                    }
+                }).data("kendoComboBox");
+
+                $("#get").click(function () {
+                    var categoryInfo = "\nCategory: { id: " + categories.value() + ", name: " + categories.text() + " }",
+                        productInfo = "\nProduct: { id: " + products.value() + ", name: " + products.text() + " }",
+                        orderInfo = "\nOrder: { id: " + orders.value() + ", name: " + orders.text() + " }";
+
+                    alert("Order details:\n" + categoryInfo + productInfo + orderInfo);
+                });
+            });
+        </script>
+    </div>
+
+
+</body>
+</html>

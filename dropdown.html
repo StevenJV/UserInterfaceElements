@@ -1,0 +1,71 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Introduction To Kendo UI</title>
+
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <link rel="stylesheet" type="text/css" href="content/kendo.common.min.css">
+    <link rel="stylesheet" type="text/css" href="content/kendo.Metro.min.css">
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/kendo.web.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var cars = [
+                { year: 2012, make: "Farrari", model: "California" },
+                { year: 2011, make: "BMW", model: "325is" },
+                { year: 2010, make: "Mini", model: "Cooper S" },
+                { year: 2012, make: "Chevy", model: "Cavalier" },
+                { year: 2011, make: "BMW", model: "R100RS" },
+                { year: 2010, make: "Ford", model: "Bronco" },
+                { year: 2012, make: "Dodge", model: "Dart" },
+                { year: 2011, make: "Lexus", model: "RS" },
+                { year: 2010, make: "Volkswagen", model: "Thing" },
+                { year: 2012, make: "Volkswagen", model: "Super Beetle" },
+                { year: 2011, make: "Mini", model: "Clubman" },
+                { year: 2010, make: "Mini", model: "Countryman" },
+                { year: 2009, make: "Porche", model: "Boxster" }
+            ];
+            var modelList = new kendo.data.DataSource({
+                data: cars,
+                columns: { field: "model"}
+            });
+            modelList.read();
+
+            var makeList = new kendo.data.DataSource({
+                data: cars,
+                columns: { field: "make"}
+            });
+            makeList.read();            
+
+            $("#makePicker").kendoDropDownList({
+                        dataTextField: "make",
+                        dataValueField: "make",
+                        dataSource: makeList,
+                        index: 0,
+                        change: onMakeChange
+                    });
+
+            kendo.init($("#page"));
+        });
+        function onMakeChange(e) { alert('make change') };
+
+    </script>
+
+
+
+</head>
+<body>
+    <div id="page" class="k-content">
+    <hr /><p>[<a href="default.html">home</a>]</p><hr />
+    <h1>Kendo UI Samples</h1>
+
+    <p>
+        pick an auto maker
+        <input id="makePicker" data-role="dropdownlist">
+    </p>
+
+</div>
+</body>
+<html>

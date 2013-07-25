@@ -1,0 +1,44 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Introduction To Kendo UI</title>
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <link rel="stylesheet" type="text/css" href="content/kendo.common.min.css">
+    <link rel="stylesheet" type="text/css" href="content/kendo.Metro.min.css">
+
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/kendo.web.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            kendo.init($("#aDatePicker"));
+            $("#aDatePicker").kendoDatePicker({ format: "dd/MM/yyyy" });
+            kendo.init($("#shapePicker"));
+        });
+        function onShapeChange(e) { alert('shape change') };
+        </script>
+
+
+
+</head>
+<body>
+    <div id="page" class="k-content">
+    <hr />
+    <p>[<a href="grid.html">grid example</a>] [<a href="dropdown.html">dropdown lists</a>] [<a href="templates.html">template example</a>] </p>
+    <hr />
+    <h1>Kendo UI Samples</h1>
+
+    <p>
+        Choose a date:
+        <input id="aDatePicker" type="text" />
+    </p>
+    <p>
+        pick a shape
+        <input id="shapePicker" data-role="combobox" data-source='["Circle","Oval","Square"]' data-change="onShapeChange">
+    </p>
+</div>
+</body>
+<html>
