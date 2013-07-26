@@ -8,24 +8,11 @@
     <link rel="stylesheet" type="text/css" href="content/kendo.Metro.min.css">
     <script type="text/javascript" src="scripts/jquery.min.js"></script>
     <script type="text/javascript" src="scripts/kendo.web.min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-            var cars = [
-                { year: 2012, make: "Farrari", model: "California" },
-                { year: 2011, make: "BMW", model: "325is" },
-                { year: 2010, make: "Mini", model: "Cooper S" },
-                { year: 2012, make: "Chevy", model: "Cavalier" },
-                { year: 2011, make: "BMW", model: "R100RS" },
-                { year: 2010, make: "Ford", model: "Bronco" },
-                { year: 2012, make: "Dodge", model: "Dart" },
-                { year: 2011, make: "Lexus", model: "RS" },
-                { year: 2010, make: "Volkswagen", model: "Thing" },
-                { year: 2012, make: "Volkswagen", model: "Super Beetle" },
-                { year: 2011, make: "Mini", model: "Clubman" },
-                { year: 2010, make: "Mini", model: "Countryman" },
-                { year: 2009, make: "Porche", model: "Boxster" }
-            ];
+
             var carsDataSource = new kendo.data.DataSource({
                 data: cars,
                 //pageSize: 10,  //if grid not pagable, and qty>pageSize, remaining items don't display. 
