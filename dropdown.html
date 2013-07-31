@@ -14,31 +14,50 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            function onMakeSelect(e) {
+                $("#YourChoice").text("Please choose a vehicle model.");
+                var dataItem = this.dataItem(e.item.index());
+                $("#ModelLabel").text(dataItem.text);
+                var dsMake = $('#modelPicker').data("kendoDropDownList");
+                dsMake.setDataSource(eval(dataItem.text + "Models"));
+                dsColor = $('#colorPicker').data("kendoDropDownList");
+                dsColor.setDataSource(emptyList);
+            };
 
-            var makeList = new kendo.data.DataSource({
-                data: makes,
-                columns: { field: "make"}
-            });
-            makeList.read();            
+            function onModelSelect(e) {
+                $("#YourChoice").text("Please choose a colour.");
+                var dsColor = $('#colorPicker').data("kendoDropDownList");
+                dsColor.setDataSource(Colors);
+            };
+
+            function onColorSelect(e) {
+                $("#YourChoice").text("Thank You.");
+            };
+
             $("#makePicker").kendoDropDownList({
-                        dataTextField: "make",
-                        dataValueField: "make",
-                        dataSource: makeList,
-                        index: 0,
-                        change: onMakeChange
+                        dataSource: makedata,                        
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        select: onMakeSelect
+                    });
+
+            $("#modelPicker").kendoDropDownList({
+                        dataSource: emptyList,                        
+                        dataTextField: "model",
+                        dataValueField: "value",
+                        select: onModelSelect
+                    });
+
+
+            $("#colorPicker").kendoDropDownList({
+                        dataSource: emptyList,                        
+                        dataTextField: "color",
+                        dataValueField: "value",
+                        select: onColorSelect
                     });
 
             kendo.init($("#page"));
         });
-
-        function onMakeChange(e) { 
-            var modelList = new kendo.data.DataSource({
-                data: cars,
-                columns: { field: "model"}
-            });
-            modelList.read();
-
-        };
 
     </script>
 </head>
@@ -46,21 +65,21 @@
 <div id="page" class="k-content">
     <hr /><p>[<a href="default.html">home</a>]</p><hr />
     <h1>Kendo UI Samples</h1>
+    <p><span id="YourChoice">Please choose a manufacturer.</span></p>
     <table>
     <tr>
-        <td>make</td>
-        <td><input id="makePicker" data-role="dropdownlist"></td>
+        <td><label id="MakelLabel">Make</label></td>
+        <td><input id="makePicker" data-role="dropdownlist" /></td>
     </tr>
     <tr>
-        <td>model</td>
-        <tr><input id="modelPicker" data-role="dropdownlist"></td>
+        <td><label id="ModelLabel">Model</label></td>
+        <td><input id="modelPicker" data-role="dropdownlist" /></td>
     </tr>
     <tr>
-        <td>color</td>
-        <tr><input id="colorPicker" data-role="dropdownlist"></td>
+        <td><label id="ColorLabel">Color</label></td>
+        <td><input id="colorPicker" data-role="dropdownlist" /></td>
     </tr>
     </table>
-
 </div>
 </body>
 <html>
