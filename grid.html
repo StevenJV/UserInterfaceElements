@@ -10,37 +10,30 @@
     <script type="text/javascript" src="scripts/kendo.web.min.js"></script>
     <script type="text/javascript" src="data.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
+<script type="text/javascript">
+$(document).ready(function () {
+    var carsDataSource = 
+              new kendo.data.DataSource({
+        data: cars,
+        sort: { field: "model", dir: "asc" }  
+    });
+    carsDataSource.read();
 
-            var carsDataSource = new kendo.data.DataSource({
-                data: cars,
-                //pageSize: 10,  //if grid not pagable, and qty>pageSize, remaining items don't display. 
-                sort: { field: "model", dir: "asc" }  // default sort
-            });
-            carsDataSource.read();
-
-            $("#carGrid").kendoGrid({
-                dataSource: carsDataSource,
-                columns: [
-                    { field: "year", title: "Year" }
-                    ,{ field: "make", title: "Make" }
-                    ,{ field: "model", title: "Model" }
-                    , { command: ["destroy"] }
-                    //, { command: ["edit", "destroy"] }
-                ]
-                , editable: true // "inline"
-                , scrollable: false
-                , pageable: false
-                , sortable: true
-                // ,groupable: true
-                // ,filterable: true
-            });
-
-
-        });
-
-        </script>
+    $("#carGrid").kendoGrid({
+        dataSource: carsDataSource,
+        columns: [
+            { field: "year", title: "Year" }
+            ,{ field: "make", title: "Make" }
+            ,{ field: "model", title: "Model" }
+        ]
+        , editable:  true 
+        , scrollable: false
+        , pageable: false
+        , sortable: true
+        , filterable: true
+    });
+});
+</script>
 
 </head>
 <body>
