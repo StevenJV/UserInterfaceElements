@@ -1,0 +1,46 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>a long dropdown-list</title>
+
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <link rel="stylesheet" type="text/css" href="content/kendo.common.min.css">
+    <link rel="stylesheet" type="text/css" href="content/kendo.Metro.min.css">
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/kendo.web.min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            function onShipSelect(e) {
+                $("#YourChoice").text($("#shipPicker").val());
+            };
+
+            $("#shipPicker").kendoDropDownList({
+                        dataSource: Ships,                        
+                        dataTextField: "name",
+                        dataValueField: "registry",
+                        select: onShipSelect
+                    });
+
+            kendo.init($("#page"));
+        });
+
+    </script>
+</head>
+<body>
+<div id="page" class="k-content">
+    <hr /><p>[<a href="default.html">home</a>]</p><hr />
+    <h1>Kendo UI Samples</h1>
+    <p><span id="YourChoice">Please choose a starship.</span></p>
+    <table>
+    <tr>
+        <td><label id="ShipLabel">Color</label></td>
+        <td><input id="shipPicker" data-role="dropdownlist" /></td>
+    </tr>
+    </table>
+</div>
+</body>
+<html>
