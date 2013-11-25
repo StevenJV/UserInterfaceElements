@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Introduction To Kendo UI</title>
+    <title>Introduction To Kendo UI - Dropdown lists using Kendo UI</title>
 
     <link rel="stylesheet" type="text/css" href="default.css">
     <link rel="stylesheet" type="text/css" href="content/kendo.common.min.css">
@@ -12,12 +12,11 @@
     <script type="text/javascript" src="data.js"></script>
 
     <script type="text/javascript">
+        colorChoice = "";
+        makeChoice = "";
+        modelChoice = "";
+
         $(document).ready(function () {
-            var colorChoice = "";
-            var makeChoice = "";
-            var modelChoice = "";
-
-
 
             function showCarChoices() {
                 $("#YourColorChoice").text(colorChoice);
@@ -30,33 +29,30 @@
             };
 
             function onMakeSelect(e) {
-                var dataItem = this.dataItem(e.item.index());
-                makeChoice = dataItem.text;
+                makeChoice = e.item.text();
                 colorChoice = "";
                 modelChoice = "";
                 showCarChoices();
-                //$('#ModelLabel').text("which ".concat(makeChoice, "?"));
+                $('#ModelLabel').text("which ".concat(makeChoice, "?"));
                 $("#YourChoice").text("Please choose a model.");
                 var dsMake = $('#modelPicker').data("kendoDropDownList");
-                dsMake.setDataSource(eval(dataItem.text + "Models"));
+                dsMake.setDataSource(eval(makeChoice + "Models"));
                 dsColor = $('#colorPicker').data("kendoDropDownList");
                 dsColor.setDataSource(emptyList);
             };
 
             function onModelSelect(e) {
-                var mdataItem = this.dataItem(e.item.index());
-                modelChoice = mdataItem.text;
+                modelChoice = e.item.text();
                 colorChoice = "";
                 showCarChoices();
-                //$('#ColorLabel').text("what color ".concat(modelChoice, "?"));
+                $('#ColorLabel').text("what color ".concat(modelChoice, "?"));
                 $("#YourChoice").text("Please choose a color.");
                 var dsColor = $('#colorPicker').data("kendoDropDownList");
                 dsColor.setDataSource(Colors);
             };
 
             function onColorSelect(e) {
-                var cdataItem = this.dataItem(e.item.index());
-                colorChoice = cdataItem.text;
+                colorChoice =  e.item.text();
                 showCarChoices();
                 $("#YourChoice").text("thank you.");
             };
