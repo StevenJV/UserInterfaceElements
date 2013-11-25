@@ -3,3 +3,32 @@
 	color: #000;
 	font: 75% 'Lucida Grande', Geneva, Verdana, Arial, Helvetica, sans-serif;
 }
+dl
+{
+    margin: 10px 0;
+    padding: 0;
+    min-width: 0;
+}
+    
+dt, dd
+{
+    float: left;
+    margin-top: 10px;    
+}
+    
+dt
+{
+    margin-top: 10px;    
+    clear: left;
+    text-align: right;
+    opacity: 0.6;
+    width: 80px;
+    margin-right: 10px;        
+}
+
+.span4 {
+    clear: both;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
