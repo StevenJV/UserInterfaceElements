@@ -1,0 +1,62 @@
+﻿<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Frames</title>
+
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <link rel="stylesheet" type="text/css" href="content/kendo.common.min.css">
+    <link rel="stylesheet" type="text/css" href="content/kendo.Metro.min.css">
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/kendo.web.min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+
+    <script type="text/javascript">
+
+        function addAFrame() {
+            var i = document.createElement("iframe");
+            i.src = "sampleframe3.html";
+            i.scrolling = "auto";
+            i.frameborder = "0";
+            i.width = "800px";
+            i.height = "100px";
+            document.getElementById("AddAFrameHere").appendChild(i);
+        };
+
+        function insertAFrame() {
+            var i = document.createElement("iframe");
+            i.src = "sampleframe3.html";
+            i.scrolling = "auto";
+            i.frameborder = "0";
+            i.width = "800px";
+            i.height = "100px";
+            // this is not currently working, throws javascript error seen in browser dev tools console
+            // Uncaught NotFoundError: An attempt was made to reference a Node in a context where it does not exist.
+            document.getElementById("AddAFrameHere").insertBefore(document.getElementById("AddAFrameHere").firstChild, i);
+        };
+
+
+        function loadFrame1() {
+            document.getElementById("frameOne").src = "sampleframe1.html";
+        };
+
+    </script>
+</head>
+<body>
+    <div id="page" class="k-content">
+        <hr />
+        <p>[<a href="default.html">home</a>]</p>
+        <hr />
+        <div id="AddAFrameHere">
+            <p><button onclick="addAFrame()">Add a frame to the end of this list.</button></p>
+            <p><button onclick="insertAFrame()">Insert a frame to the beginning of this list.</button></p>
+        </div>
+        <p>one frame already exists. <button onclick="loadFrame1()">load it</button></p>
+        <iframe id="frameOne" src="about.blank" width="800" height="200"></iframe>
+        <p>and another one:</p>
+        <iframe src="sampleframe2.html" width="800" height="200"></iframe>
+
+
+    </div>
+</body>
+<html>
