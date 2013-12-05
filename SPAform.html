@@ -1,0 +1,74 @@
+﻿<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Introduction To Kendo UI</title>
+
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.default.min.css" rel="stylesheet" type="text/css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js"></script>
+    <meta charset=utf-8 />
+
+    <script>
+        $(document).ready(function () {
+            var viewModel = kendo.observable({
+
+                // expenses array will hold the grid values
+                expenses: [],
+
+                // type array populates the drop down
+                type: [{ name: "Food", value: "food" }, { name: "Clothing", value: "clothing" }, { name: "Bills", value: "bills" }],
+
+                // expenseType holds the currently selected value of the dropdown list
+                expenseType: "food",
+
+                // the values are bound to the merchant and amount fields
+                merchant: null,
+                amount: null,
+
+                // event execute on click of add button
+                create: function (e) {
+
+                    // add the items to the array of expenses
+                    this.get("expenses").push({ Type: this.get("expenseType"), Merchant: this.get("merchant"), Amount: this.get("amount") });
+
+                    // reset the form
+                    this.set("expenseType", "food");
+                    this.set("merchant", "");
+                    this.set("amount", "");
+                }
+
+            });
+
+            // apply the bindings
+            kendo.bind(document.body.children, viewModel);
+        });
+
+    </script>
+</head>
+<body>
+    <hr /><p>[<a href="default.html">home</a>]</p><hr />
+    <h1>Kendo UI SPA Form</h1>
+    <div class="form">
+        <p>sample from <a href="http://docs.kendoui.com/tutorials/mvvm-in-kendo-ui">docs.kendoui.com/tutorials/mvvm-in-kendo-ui</a>.</p>
+        <dl>
+            <dt>Type</dt>
+            <dd>
+                <select data-role="dropdownlist" data-bind="source: type, value: expenseType" data-text-field="name" data-value-field="value"></select>
+            </dd>
+            <dt>Merchant</dt>
+            <dd><input id="merchant" type="text" class='k-textbox' data-bind="value: merchant" /></dd>
+            <dt>Amount</dt>
+            <dd><input data-role="numerictextbox" data-bind="value: amount" id="amount" type="text" /></dd>
+        </dl>
+        <dt>&nbsp;</dt>
+        <dd><button id="create" data-bind="click: create" class="k-button">Add</button></dd>
+    </div>
+
+    <div class="span4">
+        <div data-role="grid" data-sortable="true" data-bind="source: expenses" data-columns='["Type", "Merchant", "Amount"]'></div>
+    </div>
+</body>
+</html>
