@@ -1,4 +1,4 @@
-﻿<!Doctype html>
+<!Doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -13,7 +13,7 @@
 
     <script type="text/javascript">
 
-        var newFrameWidth = 800;
+        var newFrameWidth = 500;
 
         function addAFrame() {
             var i = document.createElement("iframe");
@@ -39,11 +39,6 @@
             d.insertBefore(i, d.childNodes[0]);
         };
 
-
-        function loadFrame1() {
-            document.getElementById("frameOne").src = "sampleframe1.html";
-        };
-
     </script>
 </head>
 <body>
@@ -55,13 +50,6 @@
             <p><button onclick="insertAFrame()">^  Insert a frame to the beginning of this list.</button></p>
             <p><button onclick="addAFrame()">V  Add a frame to the end of this list.</button></p>
         </div>
-        <div id="SecondSection">
-            <p>one frame already exists. <button onclick="loadFrame1()">load it</button></p>
-            <iframe id="frameOne" src="http://about.blank" width="800" height="200"></iframe>
-            <p>and another one:</p>
-            <iframe src="sampleframe2.html" width="800" height="200"></iframe>
-        </div>
-
     </div>
 </body>
 <html>
