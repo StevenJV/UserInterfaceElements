@@ -10,22 +10,22 @@
 
     <script type="text/javascript">
 
-var maxFrames = 3;
+        var maxFrame = 3;
 
-var nextFrame = 0;
+        var nextFrame = 1; // changed from 0 as static iframe added to html
 
-var myFiles = new Array();
-myFiles[0] = "sampleFrame0.html";
-myFiles[1] = "sampleFrame1.html";
-myFiles[2] = "sampleFrame2.html";
-myFiles[3] = "sampleFrame3.html";
+        var myFiles = new Array();
+        myFiles[0] = "sampleFrame0.html";
+        myFiles[1] = "sampleFrame1.html";
+        myFiles[2] = "sampleFrame2.html";
+        myFiles[3] = "sampleFrame3.html";
 
-function             checkRemainingFrames(){
-    if (nextFrame > maxFrames) {
-        $("#AddFrameAtTop").attr('disabled', 'disabled');
-        $("#AddFrameAtBottom").attr('disabled', 'disabled');
-    }
-};
+        function checkRemainingFrames(){
+            if (nextFrame > maxFrame) {
+                $("#AddFrameAtTop").attr('disabled', 'disabled');
+                $("#AddFrameAtBottom").attr('disabled', 'disabled');
+            }
+        };
 
         function addAFrame(frameNum) {
             var i = document.createElement("iframe");
@@ -53,20 +53,24 @@ function             checkRemainingFrames(){
             checkRemainingFrames();
         };
 
-        $(document).ready(function () {
-            addAFrame(nextFrame);
-        });
+        // commented out, frame added to static html with custom tag instead
+        //$(document).ready(function () {
+        //    addAFrame(nextFrame);
+        //});
 
     </script>
 </head>
 <body>
     <div id="page" class="k-content" style="width:810px">
-        <hr />
         <p>[<a href="default.html">home</a>]</p>
         <hr />
         <div id="AddAFrameHere">
             <p><button id="AddFrameAtTop" onclick="insertAFrame(nextFrame)">Insert a frame to the top of this list.</button></p>
             <p><button id="AddFrameAtBottom" onclick="addAFrame(nextFrame)">Add a frame to the bottom of this list.</button></p>
+
+            <!-- either use this iframe in html or call addAFrame at document.ready with nextFrame initialized to 0 -->
+            <iframe width="800px" TestStudioTag="MyCustomTag" scrolling="auto" height="100px" src="sampleFrame0.html"><!-- TestStudioTag="MyCustomTag" is used by Test Studio to identify this specific frame, even after other frames are added. If this isn't done then a CodedStep can be added to Test Studio. -->
+
         </div>
     </div>
 </body>
