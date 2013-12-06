@@ -2,53 +2,71 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Frames</title>
+    <title>Dynamic Frames</title>
 
     <link rel="stylesheet" type="text/css" href="default.css">
-    <link rel="stylesheet" type="text/css" href="content/kendo.common.min.css">
-    <link rel="stylesheet" type="text/css" href="content/kendo.Metro.min.css">
-    <script type="text/javascript" src="scripts/jquery.min.js"></script>
-    <script type="text/javascript" src="scripts/kendo.web.min.js"></script>
-    <script type="text/javascript" src="data.js"></script>
+
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
     <script type="text/javascript">
 
-        var newFrameWidth = 500;
+var maxFrames = 3;
 
-        function addAFrame() {
+var nextFrame = 0;
+
+var myFiles = new Array();
+myFiles[0] = "sampleFrame0.html";
+myFiles[1] = "sampleFrame1.html";
+myFiles[2] = "sampleFrame2.html";
+myFiles[3] = "sampleFrame3.html";
+
+function             checkRemainingFrames(){
+    if (nextFrame > maxFrames) {
+        $("#AddFrameAtTop").attr('disabled', 'disabled');
+        $("#AddFrameAtBottom").attr('disabled', 'disabled');
+    }
+};
+
+        function addAFrame(frameNum) {
             var i = document.createElement("iframe");
-            i.src = "sampleframe3.html";
+            i.src = myFiles[frameNum];
             i.scrolling = "auto";
             i.frameborder = "0";
-            i.width = newFrameWidth + "px" ;
-            newFrameWidth = newFrameWidth + 20;
-            i.height = "50px";
+            i.width = "800px" ;
+            i.height = "100px";
             var d = document.getElementById("AddAFrameHere");
             d.appendChild(i);
+            nextFrame ++;
+            checkRemainingFrames();
         };
 
-        function insertAFrame() {
+        function insertAFrame(frameNum) {
             var i = document.createElement("iframe");
-            i.src = "sampleframe3.html";
+            i.src = myFiles[frameNum];
             i.scrolling = "auto";
             i.frameborder = "0";
-            i.width = newFrameWidth + "px";
-            newFrameWidth = newFrameWidth + 20;
-            i.height = "50px";
+            i.width = "800px" ;
+            i.height = "75px";
             var d = document.getElementById("AddAFrameHere");
             d.insertBefore(i, d.childNodes[0]);
+            nextFrame ++;
+            checkRemainingFrames();
         };
+
+        $(document).ready(function () {
+            addAFrame(nextFrame);
+        });
 
     </script>
 </head>
 <body>
-    <div id="page" class="k-content">
+    <div id="page" class="k-content" style="width:810px">
         <hr />
         <p>[<a href="default.html">home</a>]</p>
         <hr />
         <div id="AddAFrameHere">
-            <p><button onclick="insertAFrame()">^  Insert a frame to the beginning of this list.</button></p>
-            <p><button onclick="addAFrame()">V  Add a frame to the end of this list.</button></p>
+            <p><button id="AddFrameAtTop" onclick="insertAFrame(nextFrame)">Insert a frame to the top of this list.</button></p>
+            <p><button id="AddFrameAtBottom" onclick="addAFrame(nextFrame)">Add a frame to the bottom of this list.</button></p>
         </div>
     </div>
 </body>
