@@ -9,7 +9,7 @@ app.configure(function(){
 
 app.use(express.logger());
 
-//app.use("/", express.static("content"));
+app.use(express.static(__dirname ));
 
 app.listen(port, function() {
   console.log("Listening on " + port);
