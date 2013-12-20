@@ -1,0 +1,121 @@
+demo.txt
+
+info on the steps I used to create an online app
+
+git - distributed version control
+  http://git-scm.com/    
+gitHub - a free web-based hosting service to share git repositories with others
+  https://github.com/
+git immersion - a tool for learning how to use git
+  http://gitimmersion.com/
+
+Heroku - Application server
+  https://www.heroku.com/
+  https://devcenter.heroku.com/articles/getting-started-with-nodejs
+(other application servers include Amazon Web Services, AppHarbor.com)
+
+Node.js - javascript platform for running appliations
+  http://nodejs.org/
+  http://blog.modulus.io/nodejs-and-express-static-content 
+  http://stackoverflow.com/questions/13321231/fail-to-deploy-node-js-application-to-heroku/14871187
+
+Express.js
+  framework for building web apps within Node.js
+
+
+
+
+0. install/learn enough Git to be dangerous to yourslelf (gitimmersion.com)
+
+0.a  optionally sign up for an account on GitHub and install the GitHub appliation
+
+1. sign up for a Heroko user account
+
+2. install Heroku Toolbelt
+
+3. install Node.js
+
+4. connect your local system to your Heroku account
+
+	$ heroku login
+	Enter your Heroku credentials.
+	Email: zeke@example.com
+	Password:
+	Could not find an existing public key.
+	Would you like to generate one? [Yn]
+	Generating new SSH public key.
+	Uploading ssh public key /Users/adam/.ssh/id_rsa.pub
+
+5. create an appliation 
+
+	web.js
+	Procfile
+
+5.a. install any required packages
+
+	$ npm install express --save
+
+6. declare dependencies with npm - this creates package.json
+
+	$ npm init
+
+	name: (node-example)
+	version: (0.0.0)
+	description: This example app is so cool.
+	entry point: (index.js) web.js
+	test command:
+	git repository: https://github.com/jane-doe/node-example.git
+	keywords: example heroku
+	author: jane-doe
+	license: (BSD-2-Clause) MIT
+	...
+
+7. test your application locally
+
+	$ node web.js
+or
+	$ foreman start
+
+8. create a local git repo and commit commit your code to it
+
+8.a. modify .gitignore
+
+	# Node/npm/heroku
+	node_modules/
+
+9. create Heroku application on the website, then
+   add Heroku as a remote repository
+
+    (use the website, I created an app named "sv-ui-samples")
+
+	$ heroku git:remote -a sv-ui-samples
+
+or
+
+   use Heroku command to create the application on the website and add Heroku as a remote repository
+
+	$ heroku create [NAME]
+   (if you leave name off, it will create one with some random name, as showin in their getting-started page)
+	$ heroku create
+	Creating sharp-rain-871... done, stack is cedar
+	http://sharp-rain-871.herokuapp.com/ | git@heroku.com:sharp-rain-871.git
+	Git remote heroku added
+
+   to see all the "remotes" that your local git installation is configured to work with:
+	$ git remote -v
+	heroku	git@heroku.com:sv-ui-samples.git (fetch)
+	heroku	git@heroku.com:sv-ui-samples.git (push)
+	origin	https://github.com/StevenJV/UserInterfaceElements.git (fetch)
+	origin	https://github.com/StevenJV/UserInterfaceElements.git (push)
+
+
+10. push your code to Heroku
+
+	$ git push heroku master
+
+
+11. see if it worked
+
+	$ heroku open
+
+
