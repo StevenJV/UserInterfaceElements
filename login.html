@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Login: User Interface Samples</title>
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript">
+        function login() {
+            var un = document.getElementById("username").value;
+            var pwd = document.getElementById("password").value;
+            if (un == 'Username') {
+                $("#message").text("thank you.");
+                window.location.assign("default.html");
+            }
+            else {
+                $("#message").text("invalid username/password pair.");
+            };
+        }
+    </script>
+</head>
+<body>
+    <hr /><p>&nbsp;</p><hr />
+    <h1>
+        Login
+    </h1>
+    <p>
+        <label for="username">
+            Username:
+        </label>
+        <input type="text" id="username" required />
+    </p>
+    <p>
+        <label for="password">
+            Password:
+        </label>
+        <input type="password" id="password" required />
+    </p>
+    <p>
+        <button id="login" value="login" onclick="login(this.form)">
+            Log In
+        </button>
+    </p>
+    <p><span id="message"></span>
+</body>
+</html>
