@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Sales Tax Calculator</title>
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <script type="text/javascript">
+        function calcualteTax() {
+            var theQty = document.getElementById("qty").value;
+            var thePrice = document.getElementById("price").value;
+            var theRate = document.getElementById("rate").value;
+            var theSubtotal = theQty * thePrice;
+            var theTax = Math.floor(theSubtotal * theRate) / 100;
+            document.getElementById("tax").value = theTax;
+            var theCorrectTax = Math.round(theSubtotal * theRate )/100;
+            document.getElementById("CorrectTax").value = theCorrectTax;
+            var theTotal = theSubtotal + theTax;
+            document.getElementById("total").value = theTotal;
+        }
+    </script>
+</head>
+
+<body>
+    <hr /><p>[<a href="default.html">home</a>]</p><hr />
+    <h1>
+        Sales Tax Calculator
+    </h1>
+    <p>This calculator has an intentional error, this page is used for demonstrating test methods including <a href="http://steven.vorefamily.net/2013/05/14/atdd-at-aqaa/">ATDD</a>. </p>
+    <p>
+        <label for="qty">
+            Quantity:
+        </label>
+        <input type="number" min="1" id="qty" required />
+    </p>
+    <p>
+        <label for="price">
+            Price:
+        </label>
+        <input type="number" min="1" id="price" required />
+    </p>
+    <p>
+        <label for="rate">
+            Tax rate:
+        </label>
+        <input type="number" min="0.1" id="rate" required />
+        percent
+    </p>
+    <p>
+        <button id="Calculate" value="Calculate" onclick="calcualteTax(this.form)">
+            Calculate Tax
+        </button>
+    </p>
+    <p>
+        <label for="tax">
+            Tax:
+        </label>
+        <input id="tax" type="text" />
+    </p>
+    <p>
+        CorrectTax:
+        <input id="CorrectTax" type="text" /></p>
+    <p>
+        <label for="total">
+            Total:
+        </label>
+        <input id="total" type="text" />
+    </p>
+</body>
+</html>

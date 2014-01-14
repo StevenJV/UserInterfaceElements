@@ -17,10 +17,11 @@
   },
   "dependencies": {
     "logfmt": "~0.17.0",
-    "express": "~3.4.7"
+    "express": "~3.4.8"
   },
   "engines": {
     "node": "0.10.x"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "homepage": "https://github.com/StevenJV/UserInterfaceElements"
 }
