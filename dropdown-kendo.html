@@ -1,0 +1,140 @@
+﻿<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Introduction To Kendo UI - Dropdown lists using Kendo UI</title>
+
+    <link rel="stylesheet" type="text/css" href="default.css">
+
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.default.min.css">    
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.web.min.js"></script>
+
+    <script type="text/javascript" src="data.js"></script>
+
+    <script type="text/javascript">
+        colorChoice = "";
+        makeChoice = "";
+        modelChoice = "";
+
+        $(document).ready(function () {
+
+            function showCarChoices() {
+                $("#YourColorChoice").text(colorChoice)
+                $("#YourMakeChoice").text(makeChoice);
+                $("#YourModelChoice").text(modelChoice);
+            };
+
+            function onShipSelect(e) {
+                $("#shipChoice").text($("#shipPicker").val());
+            };
+
+
+            function onMakeSelectWithDelay(e) {
+                setTimeout(function () { onMakeSelect(e);  }, 2000);
+            };
+
+            function onMakeSelect(e) {
+                makeChoice = e.item.text();
+                colorChoice = "";
+                modelChoice = "";
+                showCarChoices();
+                $('#ModelLabel').text("which ".concat(makeChoice, "?"));
+                $("#YourChoice").text("Please choose a model.");
+                var dsMake = $('#dropdownList_2').data("kendoDropDownList");
+                dsMake.setDataSource(eval(makeChoice + "Models"));
+                dsColor = $('#dropdownList_3').data("kendoDropDownList");
+                dsColor.setDataSource(emptyList);
+            };
+
+
+            function onModelSelectWithDelay(e) {
+                    setTimeout(function() { onModelSelect(e);  }, 2000);
+            };
+
+            function onModelSelect(e) {
+                modelChoice = e.item.text();
+                colorChoice = "";
+                showCarChoices();
+                $('#ColorLabel').text("what color ".concat(modelChoice, "?"));
+                $("#YourChoice").text("Please choose a color.");
+                var dsColor = $('#dropdownList_3').data("kendoDropDownList");
+                dsColor.setDataSource(Colors);
+            };
+
+            function onColorSelect(e) {
+                colorChoice =  e.item.text();
+                showCarChoices();
+                $("#YourChoice").text("thank you.");
+            };
+
+            $("#dropdownList_1").kendoDropDownList({
+                dataSource: makedata,
+                dataTextField: "text",
+                dataValueField: "value",
+                select: onMakeSelectWithDelay 
+            });
+
+            $("#dropdownList_2").kendoDropDownList({
+                dataSource: emptyList,
+                dataTextField: "model",
+                dataValueField: "value",
+                select: onModelSelectWithDelay
+            });
+
+            $("#dropdownList_3").kendoDropDownList({
+                dataSource: emptyList,
+                dataTextField: "color",
+                dataValueField: "value",
+                select: onColorSelect
+            });
+
+            $("#shipPicker").kendoDropDownList({
+                dataSource: Ships,
+                dataTextField: "name",
+                dataValueField: "registry",
+                select: onShipSelect
+            });
+
+            kendo.init($("#page"));
+        });
+
+    </script>
+</head>
+<body>
+    <div id="page" class="k-content">
+        <hr /><p>[<a href="default.html">home</a>]</p><hr />
+        <h1>Kendo UI dropdown list Samples</h1>
+        <p><span id="YourColorChoice"></span> <span id="YourMakeChoice"></span> <span id="YourModelChoice"></span> </p>
+        <p><span id="YourChoice">Please choose a manufacturer.</span></p>
+        <table>
+            <tr>
+                <td><label id="MakelLabel">Make</label></td>
+                <td><input id="dropdownList_1" data-role="dropdownlist" /></td>
+            </tr>
+            <tr>
+                <td><label id="ModelLabel">Model</label></td>
+                <td><input id="dropdownList_2" data-role="dropdownlist" /></td>
+            </tr>
+            <tr>
+                <td><label id="ColorLabel">Color</label></td>
+                <td><input id="dropdownList_3" data-role="dropdownlist" /></td>
+            </tr>
+        </table>
+
+        <hr>
+<!--
+        <div id="shipSection">
+            <p><span id="shipChoice">Please choose a starship.</span></p>
+            <table>
+                <tr>
+                    <td><label id="ShipLabel">Color</label></td>
+                    <td><input id="shipPicker" data-role="dropdownlist" /></td>
+                </tr>
+            </table>
+        </div>
+-->
+    </div>
+</body>
+<html>

@@ -2,127 +2,155 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Introduction To Kendo UI - Dropdown lists using Kendo UI</title>
+    <title>Dropdown lists</title>
 
     <link rel="stylesheet" type="text/css" href="default.css">
 
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css">
-    <link rel="stylesheet" href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.default.min.css">    
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script type="text/javascript" src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.web.min.js"></script>
 
     <script type="text/javascript" src="data.js"></script>
 
     <script type="text/javascript">
-        colorChoice = "";
-        makeChoice = "";
-        modelChoice = "";
+        var colorChoice = "";
+        var makeChoice = "";
+        var modelChoice = "";
 
-        $(document).ready(function () {
+        $(function () {
 
             function showCarChoices() {
                 $("#YourColorChoice").text(colorChoice);
                 $("#YourMakeChoice").text(makeChoice);
                 $("#YourModelChoice").text(modelChoice);
-            };
+            }
 
-            function onShipSelect(e) {
-                $("#shipChoice").text($("#shipPicker").val());
-            };
+            function loadMakes() {
+                $.each(makedata, function (index, item) {
+                    $("#dropdown_1").append('<option value="' + item.value + '">' + item.text + '</option>');
+                });
+            }
+            function loadModels(makeName) {
+                var loadFrom = makeName.concat("Models");
+                $("#dropdown_2").empty();
+                if (loadFrom !== "Models") {
+                    $("#dropdown_2").append('<option value="0">select</option>');
+                    $.each(eval(loadFrom), function (index, item) {
+                        $("#dropdown_2").append('<option value="' + item.value + '">' + item.model + '</option>');
+                    });
+                }
+            }
 
-            function onMakeSelect(e) {
-                makeChoice = e.item.text();
+            function clearModels() {
+                makeChoice = "";
+                $('#ModelLabel').text("Model");
+                $("#YourChoice").text("Please choose a manufacturer.");
+            }
+
+            function loadColors(modelName) {
+                var loadFrom = "Colors";
+                $("#dropdown_3").empty();
+                if (modelName !== "") {
+                    $("#dropdown_3").append('<option value="0">select</option>');
+                    $.each(eval(loadFrom), function (index, item) {
+                        $("#dropdown_3").append('<option value="' + item.value + '">' + item.color + '</option>');
+                    });
+                }
+            }
+
+            function clearColors() {
+                $("#dropdown_3").empty();
                 colorChoice = "";
+                $('#ColorLabel').text("Color");
+            }
+
+            function handleMakeDropdownWithDelay() {
+                setTimeout(function () { handleMakeDropdown(); }, 1000);
+            }
+
+            function handleMakeDropdown() {
+                makeChoice = $("#dropdown_1 :selected").text();
                 modelChoice = "";
+                if (makeChoice !== "select") {
+                    $('#ModelLabel').text("which ".concat(makeChoice, "?"));
+                    $("#YourChoice").text("Please choose a model.");
+                } else {
+                    clearModels();
+                }
+                clearColors();
+                loadModels(makeChoice);
                 showCarChoices();
-                $('#ModelLabel').text("which ".concat(makeChoice, "?"));
-                $("#YourChoice").text("Please choose a model.");
-                var dsMake = $('#modelPicker').data("kendoDropDownList");
-                dsMake.setDataSource(eval(makeChoice + "Models"));
-                dsColor = $('#colorPicker').data("kendoDropDownList");
-                dsColor.setDataSource(emptyList);
+            }
+
+            function handleModelDropdownWithDelay() {
+                setTimeout(function () { handleModelDropdown(); }, 1000);
             };
 
-            function onModelSelect(e) {
-                modelChoice = e.item.text();
+            function handleModelDropdown() {
+                modelChoice = $("#dropdown_2 :selected").text();
                 colorChoice = "";
+
+                if (modelChoice !== "select") {
+                    $('#ColorLabel').text("what color ".concat(modelChoice, "?"))
+                    $("#YourChoice").text("Please choose a color.");
+                } else {
+                    $("#YourChoice").text("Please choose a model.");
+                    clearColors();
+                }
+                loadColors(modelChoice);
                 showCarChoices();
-                $('#ColorLabel').text("what color ".concat(modelChoice, "?"));
-                $("#YourChoice").text("Please choose a color.");
-                var dsColor = $('#colorPicker').data("kendoDropDownList");
-                dsColor.setDataSource(Colors);
-            };
+            }
 
-            function onColorSelect(e) {
-                colorChoice =  e.item.text();
+            function handleColorDropdown() {
+                colorChoice = $("#dropdown_3 :selected").text();
                 showCarChoices();
-                $("#YourChoice").text("thank you.");
-            };
+                $("#YourChoice").text("Thank you.");
+            }
 
-            $("#makePicker").kendoDropDownList({
-                dataSource: makedata,
-                dataTextField: "text",
-                dataValueField: "value",
-                select: onMakeSelect
+            $("#dropdown_3").change(function () {
+                handleColorDropdown();
             });
 
-            $("#modelPicker").kendoDropDownList({
-                dataSource: emptyList,
-                dataTextField: "model",
-                dataValueField: "value",
-                select: onModelSelect
+            $("#dropdown_2").change(function () {
+                handleModelDropdownWithDelay();
             });
 
-            $("#colorPicker").kendoDropDownList({
-                dataSource: emptyList,
-                dataTextField: "color",
-                dataValueField: "value",
-                select: onColorSelect
+            $("#dropdown_1").change(function () {
+                handleMakeDropdownWithDelay();
             });
 
-            $("#shipPicker").kendoDropDownList({
-                dataSource: Ships,
-                dataTextField: "name",
-                dataValueField: "registry",
-                select: onShipSelect
-            });
-
-            kendo.init($("#page"));
+            loadMakes();
         });
 
     </script>
 </head>
 <body>
-    <div id="page" class="k-content">
+    <div id="page">
         <hr /><p>[<a href="default.html">home</a>]</p><hr />
-        <h1>Kendo UI dropdown list Samples</h1>
-        <p><span id="YourColorChoice"></span> <span id="YourMakeChoice"></span> <span id="YourModelChoice"></span> </p>
+        <h1>Dropdown list Samples</h1>
         <p><span id="YourChoice">Please choose a manufacturer.</span></p>
         <table>
             <tr>
-                <td><label id="MakelLabel">Make</label></td>
-                <td><input id="makePicker" data-role="dropdownlist" /></td>
+                <td width="100"><label id="MakelLabel">Make</label></td>
+                <td>
+                    <select id="dropdown_1"><option value="0">select</option></select>
+                </td>
             </tr>
+
             <tr>
                 <td><label id="ModelLabel">Model</label></td>
-                <td><input id="modelPicker" data-role="dropdownlist" /></td>
+                <td>
+                    <select id="dropdown_2" name="dropdown_2"></select>
+                </td>
             </tr>
+
             <tr>
                 <td><label id="ColorLabel">Color</label></td>
-                <td><input id="colorPicker" data-role="dropdownlist" /></td>
+                <td>
+                    <select id="dropdown_3" name="dropdown_3"></select>
+                </td>
             </tr>
         </table>
-
+        <p><span id="YourColorChoice"></span> <span id="YourMakeChoice"></span> <span id="YourModelChoice"></span> </p>
         <hr>
-        <div id="shipSection">
-            <p><span id="shipChoice">Please choose a starship.</span></p>
-            <table>
-                <tr>
-                    <td><label id="ShipLabel">Color</label></td>
-                    <td><input id="shipPicker" data-role="dropdownlist" /></td>
-                </tr>
-            </table>
-        </div>
     </div>
 </body>
 <html>

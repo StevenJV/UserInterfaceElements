@@ -20,7 +20,7 @@ var makedata = [
     { text: "BMW"        , value:"1"},
     { text: "Chevy"      , value:"2"},
     { text: "Dodge"      , value:"3"},
-    { text: "Ferrari"    , value: "4" },
+    { text: "Ferrari"    , value:"4"},
     { text: "Ford"       , value:"5"},
     { text: "Mini"       , value:"6"},
     { text: "Porsche"    , value:"7"},
